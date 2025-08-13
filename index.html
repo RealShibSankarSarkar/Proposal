@@ -4,24 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Will You Be Mine?</title>
-  <meta name="description" content="A cute, photo-free proposal page with hearts, confetti, gradient, and typewriter effect." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="description" content="A cute, fun proposal page with hearts, balloons, sparkles, glow text, and music." />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1:#ff6b6b; /* coral */
-      --bg2:#7c4dff; /* purple */
-      --bg3:#00d2ff; /* sky */
+      --bg1:#ff6b6b;
+      --bg2:#7c4dff;
+      --bg3:#00d2ff;
       --text:#ffffff;
-      --accent:#ffd166; /* warm yellow */
+      --accent:#ffd166;
       --btn:#111827;
       --btnText:#ffffff;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;}
+    html,body{height:100%;margin:0;padding:0;}
     body{
-      margin:0; color:var(--text); font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); 
+      font-family:Poppins, sans-serif;
       overflow:hidden;
       background: linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),var(--bg2));
       background-size:400% 400%;
@@ -30,7 +29,7 @@
     @keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
     /* Floating hearts */
-    .heart{position:absolute; width:14px; height:14px; background:rgba(255,255,255,.85); transform:rotate(45deg); filter:drop-shadow(0 6px 10px rgba(0,0,0,.1));}
+    .heart{position:absolute; width:14px; height:14px; background:rgba(255,255,255,.85); transform:rotate(45deg);}
     .heart:before,.heart:after{content:""; position:absolute; width:14px; height:14px; background:inherit; border-radius:50%}
     .heart:before{left:-7px}
     .heart:after{top:-7px}
@@ -38,7 +37,6 @@
     /* Card */
     .wrap{position:relative; width:100%; height:100%; display:grid; place-items:center; padding:24px}
     .card{
-      position:relative;
       width:min(780px,92vw);
       border-radius:24px;
       backdrop-filter: blur(10px);
@@ -49,44 +47,63 @@
       text-align:center;
     }
     .title{
-      font-family: Pacifico, cursive; font-size: clamp(28px,5vw,44px); line-height:1.2; letter-spacing:.5px;
-      text-shadow: 0 4px 14px rgba(0,0,0,.25);
-      margin:0 0 8px;
+      font-family: Pacifico, cursive; 
+      font-size: clamp(28px,5vw,44px);
+      text-shadow: 0 0 5px #fff, 0 0 10px #ff80bf, 0 0 20px #ff4da6;
     }
     .type{
-      font-weight:600; font-size: clamp(20px,3.8vw,30px); min-height:1.6em;
+      font-weight:600; font-size: clamp(20px,3.8vw,30px); 
+      min-height:1.6em;
+      text-shadow: 0 0 5px #fff, 0 0 10px #80d4ff, 0 0 20px #4dd2ff;
     }
     .sub{opacity:.9; margin-top:10px; font-size: clamp(14px,2.5vw,18px)}
 
     .btns{margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
     .btn{
-      appearance:none; border:0; border-radius:999px; padding:12px 22px; font-weight:700; cursor:pointer;
-      background:var(--btn); color:var(--btnText); transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
-      box-shadow: 0 10px 18px rgba(0,0,0,.25);
+      border:0; border-radius:999px; padding:12px 22px; font-weight:700; cursor:pointer;
+      background:var(--btn); color:var(--btnText);
+      transition: transform .12s ease;
     }
     .btn:hover{transform: translateY(-2px);}
     .btn.secondary{background:transparent; border:2px solid rgba(255,255,255,.7)}
 
-    .footer{margin-top:18px; font-size:12px; opacity:.8}
     .name-badge{display:inline-flex; align-items:center; gap:8px; background:rgba(0,0,0,.25); padding:6px 12px; border-radius:999px; margin-top:14px}
-    .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(255,209,102,.2)}
+    .dot{width:10px; height:10px; border-radius:50%; background:var(--accent);}
 
-    /* Hidden on load, shown after Yes */
     .yay{display:none; font-weight:700; font-size: clamp(22px,4.5vw,34px); margin-top:10px}
 
-    /* Canvas sits behind content */
     canvas#confetti{position:fixed; inset:0; width:100%; height:100%; pointer-events:none}
 
-    /* Responsive heart at bottom */
-    .big-heart{position:absolute; left:50%; bottom:-40px; width:110px; height:110px; transform: translateX(-50%) rotate(45deg); background: rgba(255,255,255,.12);} 
-    .big-heart:before,.big-heart:after{content:""; position:absolute; width:110px; height:110px; background:inherit; border-radius:50%}
-    .big-heart:before{left:-55px}
-    .big-heart:after{top:-55px}
-    .pulse{animation: pulse 2s infinite ease-in-out}
-    @keyframes pulse{0%,100%{transform:translateX(-50%) rotate(45deg) scale(1)}50%{transform:translateX(-50%) rotate(45deg) scale(1.06)}}
+    /* Sparkle */
+    .sparkle {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.8;
+      border-radius: 50%;
+      animation: sparkle 2s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes sparkle {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-200px) scale(0); opacity: 0; }
+    }
 
-    /* Make the No button playfully dodge */
-    .dodge{position:relative}
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 50px;
+      height: 70px;
+      background: radial-gradient(circle at 30% 30%, #ff4da6, #ff0066);
+      border-radius: 50%;
+      animation: floatUp 8s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -94,65 +111,49 @@
   <div class="wrap">
     <div class="card">
       <h1 class="title">একটা ছোট্ট প্রশ্ন… 💫</h1>
-      <div id="type" class="type" aria-live="polite"></div>
+      <div id="type" class="type"></div>
       <p class="sub">এই পেজটা কেবল তোমার জন্য—একটা হাসি, একটা হ্যাঁ, আর অসংখ্য স্মৃতির শুরু।</p>
 
-      <div class="name-badge" id="nameBadge">
+      <div class="name-badge">
         <span class="dot"></span>
         <span id="nameText">Shinee</span>
       </div>
 
       <div class="btns">
         <button class="btn" id="yesBtn">YES 💖</button>
-        <button class="btn secondary dodge" id="noBtn">Hmm… ভাবি 🤭</button>
+        <button class="btn secondary" id="noBtn">Hmm… ভাবি 🤭</button>
         <button class="btn secondary" id="switchName">Switch Name</button>
       </div>
 
       <div class="yay" id="yay">Yay! 💍 চল একসাথে নতুন গল্প শুরু করি।</div>
-
-      <div class="big-heart pulse"></div>
     </div>
   </div>
 
-  <script>
-    /* ==========================
-       QUICK EDIT GUIDE (Copy-Paste)
-       ----------------------------
-       1) Default names are ["Shinee", "Ishika"].
-       2) Change message lines in MSG.
-       3) Deploy anywhere (GitHub Pages / Netlify / Vercel).
-    ========================== */
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_a9e5cbdfa5.mp3?filename=romantic-background-music-11075.mp3" type="audio/mpeg">
+  </audio>
 
-    // Typewriter message lines (Bangla+English mix allowed)
+  <script>
     const MSG = [
       "হাই, একটু শোনো… 💖",
       "তোমার হাসিটা, আমার দিনের সবচেয়ে প্রিয় জিনিস।",
       "একটা প্রশ্ন ছিল…",
       "Will you be mine?"
     ];
-
-    // Name toggle list
     const NAMES = ["Shinee", "Ishika"];
-
-    // Typewriter effect
     const el = document.getElementById("type");
     let line = 0, char = 0;
-    const speed = 45; // typing speed ms
-
     function typeLoop(){
       if(line < MSG.length){
         if(char <= MSG[line].length){
           el.textContent = MSG[line].slice(0, char++);
-          setTimeout(typeLoop, speed);
-        } else {
-          line++; char = 0;
-          setTimeout(typeLoop, 500);
-        }
+          setTimeout(typeLoop, 45);
+        } else { line++; char = 0; setTimeout(typeLoop, 500); }
       }
     }
     typeLoop();
 
-    // Floating hearts
+    // Hearts
     function spawnHeart(){
       const h = document.createElement("div");
       h.className = "heart";
@@ -162,26 +163,39 @@
       h.style.left = Math.random()*100 + "vw";
       h.style.bottom = "-20px";
       document.body.appendChild(h);
-      const rise = () => {
-        const duration = 4000 + Math.random()*4000;
-        const keyframes = [
-          { transform:`translateY(0) rotate(45deg)`, opacity: .9 },
-          { transform:`translateY(-110vh) rotate(45deg)`, opacity: 0 }
-        ];
-        h.animate(keyframes, { duration, easing: "ease-out" });
-        setTimeout(() => h.remove(), duration);
-      };
-      requestAnimationFrame(rise);
+      h.animate([{ transform:`translateY(0) rotate(45deg)`, opacity: .9 },
+                 { transform:`translateY(-110vh) rotate(45deg)`, opacity: 0 }],
+                 { duration: 4000 + Math.random()*4000 });
+      setTimeout(() => h.remove(), 8000);
     }
     setInterval(spawnHeart, 300);
 
-    // Confetti (tiny vanilla canvas)
+    // Sparkles
+    setInterval(() => {
+      const sp = document.createElement('div');
+      sp.className = 'sparkle';
+      sp.style.left = Math.random() * window.innerWidth + 'px';
+      sp.style.top = Math.random() * window.innerHeight + 'px';
+      document.body.appendChild(sp);
+      setTimeout(() => sp.remove(), 2000);
+    }, 200);
+
+    // Balloons
+    function createBalloon() {
+      const b = document.createElement('div');
+      b.className = 'balloon';
+      b.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 8000);
+    }
+    setInterval(createBalloon, 3000);
+
+    // Confetti
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
     let confetti = [];
     function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
     window.addEventListener("resize", resize); resize();
-
     function makeConfettiBurst(x, y, n=120){
       for(let i=0;i<n;i++){
         confetti.push({
@@ -210,42 +224,79 @@
     }
     tick();
 
-    // Yes / No logic
+    // Buttons
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const yay = document.getElementById("yay");
-    yesBtn.addEventListener("click", e => {
-      yay.style.display = "block";
-      makeConfettiBurst(innerWidth/2, innerHeight/2, 240);
-    });
-
-    // No button dodges cursor
-    noBtn.addEventListener("mouseover", () => {
-      const parent = noBtn.parentElement.getBoundingClientRect();
-      const x = Math.random()*(parent.width - noBtn.offsetWidth);
-      const y = Math.random()*(parent.height - noBtn.offsetHeight);
-      noBtn.style.position = "relative";
-      noBtn.style.left = x - noBtn.offsetLeft + "px";
-      noBtn.style.top = y - noBtn.offsetTop + "px";
-    });
-
-    // Name switcher
     const nameText = document.getElementById("nameText");
     const switchName = document.getElementById("switchName");
     let idx = 0;
+
+    yesBtn.addEventListener("click", e => {
+      yay.style.display = "block";
+      makeConfettiBurst(innerWidth/2, innerHeight/2, 240);
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.background = "rgba(255,0,100,0.9)";
+        const size = 10 + Math.random() * 20;
+        heart.style.width = size + "px";
+        heart.style.height = size + "px";
+        heart.style.left = e.clientX + "px";
+        heart.style.top = e.clientY + "px";
+        document.body.appendChild(heart);
+        heart.animate([
+          { transform: `translate(0,0) rotate(45deg)`, opacity: 1 },
+          { transform: `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px) rotate(45deg)`, opacity: 0 }
+        ], { duration: 1000 + Math.random() * 500 });
+        setTimeout(() => heart.remove(), 1500);
+      }
+    });
+
+    // Funny No Button
+    const funnyMessages = [
+      "😂 ধরতে পারবি না!",
+      "😜 আবার চেষ্টা কর",
+      "🏃‍♂️ আমি পালাচ্ছি!",
+      "😏 খুব চেষ্টা করছো দেখি!",
+      "🙃 এখানে না, ওখানে খুঁজো!"
+    ];
+    function moveNoBtn() {
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+      noBtn.style.position = "fixed";
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+      const msg = document.createElement("div");
+      msg.textContent = funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
+      msg.style.position = "fixed";
+      msg.style.left = (randomX + 60) + "px";
+      msg.style.top = randomY + "px";
+      msg.style.background = "rgba(0,0,0,0.7)";
+      msg.style.color = "#fff";
+      msg.style.padding = "5px 10px";
+      msg.style.borderRadius = "6px";
+      msg.style.fontSize = "14px";
+      msg.style.zIndex = "9999";
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 1500);
+    }
+    noBtn.addEventListener("mouseover", moveNoBtn);
+    noBtn.addEventListener("touchstart", moveNoBtn);
+
+    // Switch name
     switchName.addEventListener("click", () => {
       idx = (idx + 1) % NAMES.length;
       nameText.textContent = NAMES[idx];
       makeConfettiBurst(innerWidth/2, innerHeight*0.2, 80);
     });
 
-    // Accessibility: Enter key triggers YES
+    // Enter key = YES
     window.addEventListener("keydown", (e)=>{
       if(e.key.toLowerCase() === "enter"){ yesBtn.click(); }
     });
   </script>
 </body>
 </html>
-"""
-
-
