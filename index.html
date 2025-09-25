@@ -1,302 +1,169 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Will You Be Mine?</title>
-  <meta name="description" content="A cute, fun proposal page with hearts, balloons, sparkles, glow text, and music." />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>শুভ দুর্গা পূজা — Personal Greeting</title>
   <style>
-    :root{
-      --bg1:#ff6b6b;
-      --bg2:#7c4dff;
-      --bg3:#00d2ff;
-      --text:#ffffff;
-      --accent:#ffd166;
-      --btn:#111827;
-      --btnText:#ffffff;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;padding:0;}
-    body{
-      color:var(--text); 
-      font-family:Poppins, sans-serif;
-      overflow:hidden;
-      background: linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),var(--bg2));
-      background-size:400% 400%;
-      animation:bgShift 15s ease infinite;
-    }
-    @keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    :root{--accent:#b71c1c;--muted:#444}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans',sans-serif;background:#f8efe9}
+    .container{max-width:920px;margin:18px auto;padding:16px}
+    header{text-align:center}
+    h1{color:var(--accent);margin:6px 0}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+    input[type=text]{padding:10px;border-radius:8px;border:1px solid #e6e0dc;min-width:220px}
+    button{background:var(--accent);color:white;border:none;padding:10px 12px;border-radius:10px;cursor:pointer}
+    .small{background:#666;padding:8px 10px}
+    .hint{font-size:0.9rem;color:#666;text-align:center;margin-top:6px}
 
-    /* Floating hearts */
-    .heart{position:absolute; width:14px; height:14px; background:rgba(255,255,255,.85); transform:rotate(45deg);}
-    .heart:before,.heart:after{content:""; position:absolute; width:14px; height:14px; background:inherit; border-radius:50%}
-    .heart:before{left:-7px}
-    .heart:after{top:-7px}
+    /* preview area */
+    .stage{position:relative;margin-top:18px;border-radius:12px;overflow:hidden;height:520px;background:#222;color:white;display:flex;align-items:center;justify-content:center}
+    .stage .bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(0.45);}
+    .stage .content{position:relative;z-index:2;text-align:center;padding:16px}
 
-    /* Card */
-    .wrap{position:relative; width:100%; height:100%; display:grid; place-items:center; padding:24px}
-    .card{
-      width:min(780px,92vw);
-      border-radius:24px;
-      backdrop-filter: blur(10px);
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.22);
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
-      padding: clamp(20px, 5vw, 40px);
-      text-align:center;
-    }
-    .title{
-      font-family: Pacifico, cursive; 
-      font-size: clamp(28px,5vw,44px);
-      text-shadow: 0 0 5px #fff, 0 0 10px #ff80bf, 0 0 20px #ff4da6;
-    }
-    .type{
-      font-weight:600; font-size: clamp(20px,3.8vw,30px); 
-      min-height:1.6em;
-      text-shadow: 0 0 5px #fff, 0 0 10px #80d4ff, 0 0 20px #4dd2ff;
-    }
-    .sub{opacity:.9; margin-top:10px; font-size: clamp(14px,2.5vw,18px)}
+    /* friend photo circle */
+    .friendPhoto{width:160px;height:160px;border-radius:50%;object-fit:cover;border:6px solid rgba(255,255,255,0.9);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
 
-    .btns{margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-    .btn{
-      border:0; border-radius:999px; padding:12px 22px; font-weight:700; cursor:pointer;
-      background:var(--btn); color:var(--btnText);
-      transition: transform .12s ease;
-    }
-    .btn:hover{transform: translateY(-2px);}
-    .btn.secondary{background:transparent; border:2px solid rgba(255,255,255,.7)}
+    /* animated greeting */
+    .greeting{margin-top:14px;font-size:1.6rem;font-weight:700;letter-spacing:0.5px;text-shadow:0 6px 18px rgba(0,0,0,0.6);opacity:0;transform:translateY(20px);}
+    .greeting.show{animation:floatUp 900ms cubic-bezier(.2,.9,.3,1) forwards}
+    @keyframes floatUp{to{opacity:1;transform:translateY(0)}}
 
-    .name-badge{display:inline-flex; align-items:center; gap:8px; background:rgba(0,0,0,.25); padding:6px 12px; border-radius:999px; margin-top:14px}
-    .dot{width:10px; height:10px; border-radius:50%; background:var(--accent);}
+    /* drum SVG wrapper */
+    .dhakWrap{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:18px}
+    .dhakSVG{width:220px;height:140px;display:block}
+    /* animate sticks using CSS variables */
+    .stickLeft{transform-origin:80% 90%;animation:stickLeft 360ms ease-in-out infinite}
+    .stickRight{transform-origin:20% 90%;animation:stickRight 360ms ease-in-out infinite}
+    @keyframes stickLeft{0%{transform:rotate(20deg)}50%{transform:rotate(-25deg)}100%{transform:rotate(20deg)}}
+    @keyframes stickRight{0%{transform:rotate(-20deg)}50%{transform:rotate(25deg)}100%{transform:rotate(-20deg)}}
 
-    .yay{display:none; font-weight:700; font-size: clamp(22px,4.5vw,34px); margin-top:10px}
+    /* subtle stage shake when playing */
+    .stage.playing{animation:stageShake 600ms ease-in-out}
+    @keyframes stageShake{0%{transform:translateY(0)}25%{transform:translateY(-6px)}50%{transform:translateY(0)}75%{transform:translateY(-3px)}100%{transform:translateY(0)}}
 
-    canvas#confetti{position:fixed; inset:0; width:100%; height:100%; pointer-events:none}
+    /* controls area small */
+    .uploads{display:flex;gap:8px;align-items:center;justify-content:center}
+    input[type=file]{display:none}
+    label.upload{background:rgba(255,255,255,0.95);color:#222;padding:8px 10px;border-radius:8px;cursor:pointer;border:1px dashed #ddd}
 
-    /* Sparkle */
-    .sparkle {
-      position: fixed;
-      width: 2px;
-      height: 2px;
-      background: white;
-      opacity: 0.8;
-      border-radius: 50%;
-      animation: sparkle 2s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes sparkle {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-200px) scale(0); opacity: 0; }
-    }
+    /* footer */
+    footer{margin-top:14px;text-align:center;color:var(--muted);font-size:0.92rem}
 
-    /* Balloons */
-    .balloon {
-      position: absolute;
-      bottom: -150px;
-      width: 50px;
-      height: 70px;
-      background: radial-gradient(circle at 30% 30%, #ff4da6, #ff0066);
-      border-radius: 50%;
-      animation: floatUp 8s linear infinite;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-    }
+    @media (max-width:600px){.friendPhoto{width:120px;height:120px}.greeting{font-size:1.2rem}}
   </style>
 </head>
 <body>
-  <canvas id="confetti"></canvas>
-  <div class="wrap">
-    <div class="card">
-      <h1 class="title">একটা ছোট্ট প্রশ্ন… 💫</h1>
-      <div id="type" class="type"></div>
-      <p class="sub">এই পেজটা কেবল তোমার জন্য—একটা হাসি, একটা হ্যাঁ, আর অসংখ্য স্মৃতির শুরু।</p>
+  <div class="container">
+    <header>
+      <h1>শুভ দুর্গা পূজা — Personal Greeting</h1>
+      <p class="hint">এখানে শুধু তোমার বেছে নেওয়া বন্ধুর ছবি দেখাবে, সাথে একটি অ্যানিমেটেড শুভেচ্ছা। ব্যাকগ্রাউন্ডে মা দুর্গার ছবি আপলোড করে ব্যবহার করো।</p>
+    </header>
 
-      <div class="name-badge">
-        <span class="dot"></span>
-        <span id="nameText">Shinee</span>
+    <div class="controls">
+      <input id="friendName" type="text" placeholder="বন্ধুর নাম লিখো — উদাহরণ: Raju" value="Raju" />
+      <div class="uploads">
+        <label class="upload" for="bgUpload">ব্যাকগ্রাউন্ড আপলোড (দুর্গা)</label>
+        <input id="bgUpload" type="file" accept="image/*" />
+        <label class="upload" for="photoUpload">বন্ধুর ছবি আপলোড</label>
+        <input id="photoUpload" type="file" accept="image/*" />
       </div>
-
-      <div class="btns">
-        <button class="btn" id="yesBtn">YES 💖</button>
-        <button class="btn secondary" id="noBtn">Hmm… ভাবি 🤭</button>
-        <button class="btn secondary" id="switchName">Switch Name</button>
-      </div>
-
-      <div class="yay" id="yay">Yay! 💍 চল একসাথে নতুন গল্প শুরু করি।</div>
+      <button id="showBtn">Show Greeting</button>
     </div>
+
+    <div class="stage" id="stage">
+      <div class="bg" id="bgDiv"></div>
+      <div class="content" id="content">
+        <img id="photoPreview" class="friendPhoto" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23fdebd9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='64' fill='%23b71c1c' font-family='Arial'%3ER%3C/text%3E%3C/svg%3E" alt="friend" />
+        <div id="nameText" style="margin-top:12px;font-weight:700;font-size:1.1rem;color:white;letter-spacing:0.6px;opacity:0.95">Raju</div>
+
+        <div class="dhakWrap" aria-hidden="true">
+          <!-- SVG drum with two sticks -->
+          <svg class="dhakSVG" viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg">
+            <!-- left rope -->
+            <g transform="translate(70,40)">
+              <ellipse cx="120" cy="90" rx="120" ry="60" fill="#f7e7d6" stroke="#c08a57" stroke-width="6" />
+              <!-- rim lines -->
+              <ellipse cx="120" cy="90" rx="120" ry="60" fill="none" stroke="#c08a57" stroke-width="4" stroke-opacity="0.6" />
+              <!-- skin texture -->
+              <g opacity="0.06">
+                <path d="M10 85 q70 -40 220 0 q-50 20 -220 0" fill="#000" />
+              </g>
+            </g>
+
+            <!-- left stick -->
+            <g class="stickLeft" transform="translate(120,40)">
+              <rect x="-8" y="-14" width="16" height="120" rx="6" fill="#8b3a2c" />
+              <circle cx="0" cy="-20" r="12" fill="#d96b4b" />
+            </g>
+
+            <!-- right stick -->
+            <g class="stickRight" transform="translate(320,40)">
+              <rect x="-8" y="-14" width="16" height="120" rx="6" fill="#8b3a2c" />
+              <circle cx="0" cy="-20" r="12" fill="#d96b4b" />
+            </g>
+          </svg>
+        </div>
+
+        <div id="greeting" class="greeting">শুভ দুর্গা পূজা, শুভেচ্ছা তোমার জন্য!</div>
+      </div>
+    </div>
+
+    <footer>
+      <small>এই ফাইলটি কপি করে GitHub-এ আপলোড করো; ব্যাকগ্রাউন্ড হিসেবে মা দুর্গার ছবি আপলোড করলেই ভিজ্যুয়াল হবে।</small>
+    </footer>
   </div>
 
-  <audio id="bgMusic" autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_a9e5cbdfa5.mp3?filename=romantic-background-music-11075.mp3" type="audio/mpeg">
-  </audio>
-
   <script>
-    const MSG = [
-      "হাই, একটু শোনো… 💖",
-      "তোমার হাসিটা, আমার দিনের সবচেয়ে প্রিয় জিনিস।",
-      "একটা প্রশ্ন ছিল…",
-      "Will you be mine?"
-    ];
-    const NAMES = ["Shinee", "Ishika"];
-    const el = document.getElementById("type");
-    let line = 0, char = 0;
-    function typeLoop(){
-      if(line < MSG.length){
-        if(char <= MSG[line].length){
-          el.textContent = MSG[line].slice(0, char++);
-          setTimeout(typeLoop, 45);
-        } else { line++; char = 0; setTimeout(typeLoop, 500); }
-      }
-    }
-    typeLoop();
+    const bgUpload = document.getElementById('bgUpload');
+    const photoUpload = document.getElementById('photoUpload');
+    const bgDiv = document.getElementById('bgDiv');
+    const photoPreview = document.getElementById('photoPreview');
+    const nameInput = document.getElementById('friendName');
+    const nameText = document.getElementById('nameText');
+    const showBtn = document.getElementById('showBtn');
+    const greeting = document.getElementById('greeting');
+    const stage = document.getElementById('stage');
 
-    // Hearts
-    function spawnHeart(){
-      const h = document.createElement("div");
-      h.className = "heart";
-      const size = 8 + Math.random()*14;
-      h.style.width = size+"px";
-      h.style.height = size+"px";
-      h.style.left = Math.random()*100 + "vw";
-      h.style.bottom = "-20px";
-      document.body.appendChild(h);
-      h.animate([{ transform:`translateY(0) rotate(45deg)`, opacity: .9 },
-                 { transform:`translateY(-110vh) rotate(45deg)`, opacity: 0 }],
-                 { duration: 4000 + Math.random()*4000 });
-      setTimeout(() => h.remove(), 8000);
-    }
-    setInterval(spawnHeart, 300);
-
-    // Sparkles
-    setInterval(() => {
-      const sp = document.createElement('div');
-      sp.className = 'sparkle';
-      sp.style.left = Math.random() * window.innerWidth + 'px';
-      sp.style.top = Math.random() * window.innerHeight + 'px';
-      document.body.appendChild(sp);
-      setTimeout(() => sp.remove(), 2000);
-    }, 200);
-
-    // Balloons
-    function createBalloon() {
-      const b = document.createElement('div');
-      b.className = 'balloon';
-      b.style.left = Math.random() * (window.innerWidth - 50) + 'px';
-      document.body.appendChild(b);
-      setTimeout(() => b.remove(), 8000);
-    }
-    setInterval(createBalloon, 3000);
-
-    // Confetti
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-    let confetti = [];
-    function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-    window.addEventListener("resize", resize); resize();
-    function makeConfettiBurst(x, y, n=120){
-      for(let i=0;i<n;i++){
-        confetti.push({
-          x, y,
-          vx: (Math.random()*2-1)* (2 + Math.random()*4),
-          vy: (Math.random()*-2-1) * (2 + Math.random()*3),
-          g: 0.06 + Math.random()*0.04,
-          r: 2 + Math.random()*3,
-          a: 1,
-          life: 80 + Math.random()*60
-        });
-      }
-    }
-    function tick(){
-      ctx.clearRect(0,0,canvas.width, canvas.height);
-      confetti.forEach(p => {
-        p.vy += p.g; p.x += p.vx; p.y += p.vy; p.life -= 1; p.a = Math.max(0, p.life/120);
-        ctx.globalAlpha = p.a;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        ctx.fillStyle = "#fff";
-        ctx.fill();
-      });
-      confetti = confetti.filter(p => p.life > 0);
-      requestAnimationFrame(tick);
-    }
-    tick();
-
-    // Buttons
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const yay = document.getElementById("yay");
-    const nameText = document.getElementById("nameText");
-    const switchName = document.getElementById("switchName");
-    let idx = 0;
-
-    yesBtn.addEventListener("click", e => {
-      yay.style.display = "block";
-      makeConfettiBurst(innerWidth/2, innerHeight/2, 240);
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.style.background = "rgba(255,0,100,0.9)";
-        const size = 10 + Math.random() * 20;
-        heart.style.width = size + "px";
-        heart.style.height = size + "px";
-        heart.style.left = e.clientX + "px";
-        heart.style.top = e.clientY + "px";
-        document.body.appendChild(heart);
-        heart.animate([
-          { transform: `translate(0,0) rotate(45deg)`, opacity: 1 },
-          { transform: `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px) rotate(45deg)`, opacity: 0 }
-        ], { duration: 1000 + Math.random() * 500 });
-        setTimeout(() => heart.remove(), 1500);
-      }
+    // handle uploads
+    bgUpload.addEventListener('change', (e)=>{
+      const f = e.target.files && e.target.files[0];
+      if(!f) return;
+      const url = URL.createObjectURL(f);
+      bgDiv.style.backgroundImage = `url(${url})`;
     });
 
-    // Funny No Button
-    const funnyMessages = [
-      "😂 ধরতে পারবি না!",
-      "😜 আবার চেষ্টা কর",
-      "🏃‍♂️ আমি পালাচ্ছি!",
-      "😏 খুব চেষ্টা করছো দেখি!",
-      "🙃 এখানে না, ওখানে খুঁজো!"
-    ];
-    function moveNoBtn() {
-      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-      const randomX = Math.random() * maxX;
-      const randomY = Math.random() * maxY;
-      noBtn.style.position = "fixed";
-      noBtn.style.left = randomX + "px";
-      noBtn.style.top = randomY + "px";
-      const msg = document.createElement("div");
-      msg.textContent = funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
-      msg.style.position = "fixed";
-      msg.style.left = (randomX + 60) + "px";
-      msg.style.top = randomY + "px";
-      msg.style.background = "rgba(0,0,0,0.7)";
-      msg.style.color = "#fff";
-      msg.style.padding = "5px 10px";
-      msg.style.borderRadius = "6px";
-      msg.style.fontSize = "14px";
-      msg.style.zIndex = "9999";
-      document.body.appendChild(msg);
-      setTimeout(() => msg.remove(), 1500);
-    }
-    noBtn.addEventListener("mouseover", moveNoBtn);
-    noBtn.addEventListener("touchstart", moveNoBtn);
-
-    // Switch name
-    switchName.addEventListener("click", () => {
-      idx = (idx + 1) % NAMES.length;
-      nameText.textContent = NAMES[idx];
-      makeConfettiBurst(innerWidth/2, innerHeight*0.2, 80);
+    photoUpload.addEventListener('change', (e)=>{
+      const f = e.target.files && e.target.files[0];
+      if(!f) return;
+      const url = URL.createObjectURL(f);
+      photoPreview.src = url;
     });
 
-    // Enter key = YES
-    window.addEventListener("keydown", (e)=>{
-      if(e.key.toLowerCase() === "enter"){ yesBtn.click(); }
+    nameInput.addEventListener('input', ()=>{ nameText.textContent = nameInput.value || 'বন্ধু'; });
+
+    // show greeting animation: stage shakes, sticks animate (already via CSS), and greeting text fades in
+    showBtn.addEventListener('click', ()=>{
+      // reset
+      greeting.classList.remove('show');
+      void greeting.offsetWidth; // reflow to restart animation
+
+      stage.classList.add('playing');
+      setTimeout(()=> stage.classList.remove('playing'), 700);
+
+      // show greeting text
+      setTimeout(()=> greeting.classList.add('show'), 120);
+
+      // optional: briefly highlight name
+      nameText.animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:700,easing:'ease-out'});
     });
+
+    // keyboard: Enter triggers show
+    nameInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); showBtn.click(); } });
+
+    // initialize with defaults: a soft placeholder background (SVG) so it looks fine without upload
+    const placeholderBg = `data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><rect width='100%' height='100%' fill='%23fdebd9'/><text x='50%' y='50%' fill='%23b71c1c' font-family='Arial' font-size='48' text-anchor='middle' dominant-baseline='middle'>মা দুর্গার ছবি এখানে আপলোড করুন</text></svg>")}`;
+    bgDiv.style.backgroundImage = `url(${placeholderBg})`;
   </script>
 </body>
 </html>
