@@ -1,169 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>শুভ দুর্গা পূজা — Personal Greeting</title>
-  <style>
-    :root{--accent:#b71c1c;--muted:#444}
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans',sans-serif;background:#f8efe9}
-    .container{max-width:920px;margin:18px auto;padding:16px}
-    header{text-align:center}
-    h1{color:var(--accent);margin:6px 0}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0}
-    input[type=text]{padding:10px;border-radius:8px;border:1px solid #e6e0dc;min-width:220px}
-    button{background:var(--accent);color:white;border:none;padding:10px 12px;border-radius:10px;cursor:pointer}
-    .small{background:#666;padding:8px 10px}
-    .hint{font-size:0.9rem;color:#666;text-align:center;margin-top:6px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার মনের একটি কথা...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
 
-    /* preview area */
-    .stage{position:relative;margin-top:18px;border-radius:12px;overflow:hidden;height:520px;background:#222;color:white;display:flex;align-items:center;justify-content:center}
-    .stage .bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(0.45);}
-    .stage .content{position:relative;z-index:2;text-align:center;padding:16px}
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+        }
 
-    /* friend photo circle */
-    .friendPhoto{width:160px;height:160px;border-radius:50%;object-fit:cover;border:6px solid rgba(255,255,255,0.9);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+        h1 {
+            color: #d6336c;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
 
-    /* animated greeting */
-    .greeting{margin-top:14px;font-size:1.6rem;font-weight:700;letter-spacing:0.5px;text-shadow:0 6px 18px rgba(0,0,0,0.6);opacity:0;transform:translateY(20px);}
-    .greeting.show{animation:floatUp 900ms cubic-bezier(.2,.9,.3,1) forwards}
-    @keyframes floatUp{to{opacity:1;transform:translateY(0)}}
+        p {
+            color: #333;
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
 
-    /* drum SVG wrapper */
-    .dhakWrap{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:18px}
-    .dhakSVG{width:220px;height:140px;display:block}
-    /* animate sticks using CSS variables */
-    .stickLeft{transform-origin:80% 90%;animation:stickLeft 360ms ease-in-out infinite}
-    .stickRight{transform-origin:20% 90%;animation:stickRight 360ms ease-in-out infinite}
-    @keyframes stickLeft{0%{transform:rotate(20deg)}50%{transform:rotate(-25deg)}100%{transform:rotate(20deg)}}
-    @keyframes stickRight{0%{transform:rotate(-20deg)}50%{transform:rotate(25deg)}100%{transform:rotate(-20deg)}}
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
 
-    /* subtle stage shake when playing */
-    .stage.playing{animation:stageShake 600ms ease-in-out}
-    @keyframes stageShake{0%{transform:translateY(0)}25%{transform:translateY(-6px)}50%{transform:translateY(0)}75%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative; /* 'না' বাটনের জন্য জরুরি */
+        }
 
-    /* controls area small */
-    .uploads{display:flex;gap:8px;align-items:center;justify-content:center}
-    input[type=file]{display:none}
-    label.upload{background:rgba(255,255,255,0.95);color:#222;padding:8px 10px;border-radius:8px;cursor:pointer;border:1px dashed #ddd}
+        #yesBtn {
+            background-color: #28a745;
+        }
 
-    /* footer */
-    footer{margin-top:14px;text-align:center;color:var(--muted);font-size:0.92rem}
+        #yesBtn:hover {
+            transform: scale(1.1);
+        }
 
-    @media (max-width:600px){.friendPhoto{width:120px;height:120px}.greeting{font-size:1.2rem}}
-  </style>
+        #noBtn {
+            background-color: #dc3545;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>শুভ দুর্গা পূজা — Personal Greeting</h1>
-      <p class="hint">এখানে শুধু তোমার বেছে নেওয়া বন্ধুর ছবি দেখাবে, সাথে একটি অ্যানিমেটেড শুভেচ্ছা। ব্যাকগ্রাউন্ডে মা দুর্গার ছবি আপলোড করে ব্যবহার করো।</p>
-    </header>
 
-    <div class="controls">
-      <input id="friendName" type="text" placeholder="বন্ধুর নাম লিখো — উদাহরণ: Raju" value="Raju" />
-      <div class="uploads">
-        <label class="upload" for="bgUpload">ব্যাকগ্রাউন্ড আপলোড (দুর্গা)</label>
-        <input id="bgUpload" type="file" accept="image/*" />
-        <label class="upload" for="photoUpload">বন্ধুর ছবি আপলোড</label>
-        <input id="photoUpload" type="file" accept="image/*" />
-      </div>
-      <button id="showBtn">Show Greeting</button>
-    </div>
-
-    <div class="stage" id="stage">
-      <div class="bg" id="bgDiv"></div>
-      <div class="content" id="content">
-        <img id="photoPreview" class="friendPhoto" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23fdebd9'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='64' fill='%23b71c1c' font-family='Arial'%3ER%3C/text%3E%3C/svg%3E" alt="friend" />
-        <div id="nameText" style="margin-top:12px;font-weight:700;font-size:1.1rem;color:white;letter-spacing:0.6px;opacity:0.95">Raju</div>
-
-        <div class="dhakWrap" aria-hidden="true">
-          <!-- SVG drum with two sticks -->
-          <svg class="dhakSVG" viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg">
-            <!-- left rope -->
-            <g transform="translate(70,40)">
-              <ellipse cx="120" cy="90" rx="120" ry="60" fill="#f7e7d6" stroke="#c08a57" stroke-width="6" />
-              <!-- rim lines -->
-              <ellipse cx="120" cy="90" rx="120" ry="60" fill="none" stroke="#c08a57" stroke-width="4" stroke-opacity="0.6" />
-              <!-- skin texture -->
-              <g opacity="0.06">
-                <path d="M10 85 q70 -40 220 0 q-50 20 -220 0" fill="#000" />
-              </g>
-            </g>
-
-            <!-- left stick -->
-            <g class="stickLeft" transform="translate(120,40)">
-              <rect x="-8" y="-14" width="16" height="120" rx="6" fill="#8b3a2c" />
-              <circle cx="0" cy="-20" r="12" fill="#d96b4b" />
-            </g>
-
-            <!-- right stick -->
-            <g class="stickRight" transform="translate(320,40)">
-              <rect x="-8" y="-14" width="16" height="120" rx="6" fill="#8b3a2c" />
-              <circle cx="0" cy="-20" r="12" fill="#d96b4b" />
-            </g>
-          </svg>
+    <div class="container" id="proposalContainer">
+        <h1>প্রিয় [এখানে আপনার প্রিয়তমার নাম লিখুন],</h1>
+        <p>
+             যেদিন থেকে তোমাকে প্রথম দেখেছি, আমার পৃথিবীটা যেন বদলে গেছে। তোমার হাসি, তোমার কথা বলার ভঙ্গি, সবকিছুই আমার কাছে ভীষণ প্রিয়। 
+            <br><br>
+            আমার কোডিংয়ের জগতে তুমিই আমার সবচেয়ে সুন্দর অ্যালগরিদম। তুমি কি আমার জীবনের `while(true)` লুপ হয়ে থাকবে? 
+            <br><br>
+            আমি তোমার হাতটা সারাজীবনের জন্য ধরতে চাই। তুমি কি আমার হবে?
+        </p>
+        <div class="buttons">
+            <button id="yesBtn">হ্যাঁ</button>
+            <button id="noBtn">না</button>
         </div>
-
-        <div id="greeting" class="greeting">শুভ দুর্গা পূজা, শুভেচ্ছা তোমার জন্য!</div>
-      </div>
     </div>
 
-    <footer>
-      <small>এই ফাইলটি কপি করে GitHub-এ আপলোড করো; ব্যাকগ্রাউন্ড হিসেবে মা দুর্গার ছবি আপলোড করলেই ভিজ্যুয়াল হবে।</small>
-    </footer>
-  </div>
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const container = document.getElementById('proposalContainer');
 
-  <script>
-    const bgUpload = document.getElementById('bgUpload');
-    const photoUpload = document.getElementById('photoUpload');
-    const bgDiv = document.getElementById('bgDiv');
-    const photoPreview = document.getElementById('photoPreview');
-    const nameInput = document.getElementById('friendName');
-    const nameText = document.getElementById('nameText');
-    const showBtn = document.getElementById('showBtn');
-    const greeting = document.getElementById('greeting');
-    const stage = document.getElementById('stage');
+        // 'না' বাটনে মাউস নিলে এটি সরে যাবে
+        noBtn.addEventListener('mouseover', () => {
+            const containerRect = container.getBoundingClientRect();
+            const noBtnRect = noBtn.getBoundingClientRect();
 
-    // handle uploads
-    bgUpload.addEventListener('change', (e)=>{
-      const f = e.target.files && e.target.files[0];
-      if(!f) return;
-      const url = URL.createObjectURL(f);
-      bgDiv.style.backgroundImage = `url(${url})`;
-    });
+            let newTop = Math.random() * (containerRect.height - noBtnRect.height);
+            let newLeft = Math.random() * (containerRect.width - noBtnRect.width);
+            
+            // নিশ্চিত করা হচ্ছে যে বাটনটি কন্টেইনারের বাইরে না যায়
+            if(newTop < 0) newTop = 0;
+            if(newLeft < 0) newLeft = 0;
 
-    photoUpload.addEventListener('change', (e)=>{
-      const f = e.target.files && e.target.files[0];
-      if(!f) return;
-      const url = URL.createObjectURL(f);
-      photoPreview.src = url;
-    });
+            noBtn.style.position = 'absolute';
+            noBtn.style.top = newTop + 'px';
+            noBtn.style.left = newLeft + 'px';
+        });
 
-    nameInput.addEventListener('input', ()=>{ nameText.textContent = nameInput.value || 'বন্ধু'; });
+        // 'হ্যাঁ' বাটনে ক্লিক করলে বার্তা দেখাবে
+        yesBtn.addEventListener('click', () => {
+            container.innerHTML = `
+                <h1>আমি জানতাম তুমি হ্যাঁ বলবে! ❤️</h1>
+                <p>আমার জীবনকে সম্পূর্ণ করার জন্য ধন্যবাদ।</p>
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWVsdXZkMmhqY3J3MXZ2aXo1bjJtY250eWV6cG5wNWZobGczZmEyYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26u4bkvatkyYarAas/giphy.gif" alt="Celebration" style="max-width: 100%; border-radius: 10px;">
+            `;
+        });
+    </script>
 
-    // show greeting animation: stage shakes, sticks animate (already via CSS), and greeting text fades in
-    showBtn.addEventListener('click', ()=>{
-      // reset
-      greeting.classList.remove('show');
-      void greeting.offsetWidth; // reflow to restart animation
-
-      stage.classList.add('playing');
-      setTimeout(()=> stage.classList.remove('playing'), 700);
-
-      // show greeting text
-      setTimeout(()=> greeting.classList.add('show'), 120);
-
-      // optional: briefly highlight name
-      nameText.animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:700,easing:'ease-out'});
-    });
-
-    // keyboard: Enter triggers show
-    nameInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); showBtn.click(); } });
-
-    // initialize with defaults: a soft placeholder background (SVG) so it looks fine without upload
-    const placeholderBg = `data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><rect width='100%' height='100%' fill='%23fdebd9'/><text x='50%' y='50%' fill='%23b71c1c' font-family='Arial' font-size='48' text-anchor='middle' dominant-baseline='middle'>মা দুর্গার ছবি এখানে আপলোড করুন</text></svg>")}`;
-    bgDiv.style.backgroundImage = `url(${placeholderBg})`;
-  </script>
 </body>
 </html>
