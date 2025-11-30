@@ -3,119 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আমার মনের একটি কথা...</title>
+    <title>প্রীতম-এর তরফ থেকে রিমঝিম-এর জন্য একটি চিঠি</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-        }
-
-        .container {
+            font-family: Arial, sans-serif;
             text-align: center;
-            background: rgba(255, 255, 255, 0.9);
+            background-color: #fce4ec; /* হালকা গোলাপি ব্যাকগ্রাউন্ড */
+            padding: 30px;
+        }
+        .container {
+            background-color: white;
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 90%;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 50px auto;
         }
-
         h1 {
-            color: #d6336c;
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            color: #d81b60; /* গাঢ় গোলাপী */
         }
-
-        p {
-            color: #333;
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin-bottom: 30px;
+        .shayari {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 5px solid #d81b60;
+            font-style: italic;
+            font-size: 1.1em;
+            text-align: left;
         }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        button {
+        .buttons button {
             padding: 15px 30px;
+            margin: 10px;
             font-size: 1.2em;
             cursor: pointer;
             border: none;
-            border-radius: 10px;
-            color: white;
-            transition: all 0.3s ease;
-            position: relative; /* 'না' বাটনের জন্য জরুরি */
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
-
         #yesBtn {
-            background-color: #28a745;
+            background-color: #4caf50; /* সবুজ */
+            color: white;
         }
-
-        #yesBtn:hover {
-            transform: scale(1.1);
-        }
-
         #noBtn {
-            background-color: #dc3545;
+            background-color: #f44336; /* লাল */
+            color: white;
+            position: absolute; /* জাভাস্ক্রিপ্ট ট্রিকের জন্য */
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="proposalContainer">
-        <h1>প্রিয় [এখানে আপনার প্রিয়তমার নাম লিখুন],</h1>
-        <p>
-             যেদিন থেকে তোমাকে প্রথম দেখেছি, আমার পৃথিবীটা যেন বদলে গেছে। তোমার হাসি, তোমার কথা বলার ভঙ্গি, সবকিছুই আমার কাছে ভীষণ প্রিয়। 
-            <br><br>
-            আমার কোডিংয়ের জগতে তুমিই আমার সবচেয়ে সুন্দর অ্যালগরিদম। তুমি কি আমার জীবনের `while(true)` লুপ হয়ে থাকবে? 
-            <br><br>
-            আমি তোমার হাতটা সারাজীবনের জন্য ধরতে চাই। তুমি কি আমার হবে?
-        </p>
-        <div class="buttons">
-            <button id="yesBtn">হ্যাঁ</button>
-            <button id="noBtn">না</button>
-        </div>
+<div class="container">
+    <h1>প্রিয় রিমঝিম,</h1>
+    
+    <div class="shayari">
+        <p>রিমঝিম নামেতেই ঝরে কত কাব্য,<br>
+        প্রথম দেখাতেই মন হলো বাধ্য।</p>
+        <p>জানি, তুমি বলেছো "নট ইন্টারেস্টেড",<br>
+        তাই প্রীতম (শিব শঙ্কর) এই code-টা পাঠাল, যাতে না হয় কষ্ট।</p>
+        <p>এই ছোট্ট দুনিয়াটা শুধুই তোমার জন্য সাজালাম,<br>
+        যদি একবার সুযোগ দাও, তবে ভালো বন্ধু হিসেবেও পাশে থাকব জানলাম।</p>
     </div>
 
-    <script>
+    <p style="font-size: 1.3em; margin-top: 30px;">
+        আচ্ছা, এই কোডের উত্তর কি হবে? ভেবে দেখো!
+    </p>
+
+    <div class="buttons">
+        <button id="yesBtn" onclick="handleYes()">হ্যাঁ, তোমার সাথে কথা বলতে ভালো লাগবে!</button>
+        <button id="noBtn" onmouseover="moveNoButton()" onclick="handleNo()">না, আমি এখনও ইন্টারেস্টেড নই</button>
+    </div>
+
+    <p style="margin-top: 30px; font-size: 0.8em; color: #757575;">
+        — তোমার শুভাকাঙ্ক্ষী, প্রীতম (শিব শঙ্কর সরকার)
+    </p>
+</div>
+
+<script>
+    function handleYes() {
+        alert("ধন্যবাদ রিমঝিম! তুমি আমার দিনের সেরা উপহার। চলো এবার মন খুলে কথা বলা যাক। ❤️");
+        // আপনি চাইলে এখানে রিডাইরেক্ট করে একটি সুন্দর Thank You পেজে নিয়ে যেতে পারেন
+    }
+
+    // *** মূল মজার অংশ (The Funny Trick) ***
+    function moveNoButton() {
         const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const container = document.getElementById('proposalContainer');
+        
+        // বাটনটিকে এলোমেলোভাবে সরিয়ে দেওয়া হবে
+        const container = document.querySelector('.container');
+        const maxX = container.clientWidth - noBtn.offsetWidth;
+        const maxY = container.clientHeight - noBtn.offsetHeight;
 
-        // 'না' বাটনে মাউস নিলে এটি সরে যাবে
-        noBtn.addEventListener('mouseover', () => {
-            const containerRect = container.getBoundingClientRect();
-            const noBtnRect = noBtn.getBoundingClientRect();
+        const newX = Math.floor(Math.random() * maxX * 0.8); 
+        const newY = Math.floor(Math.random() * maxY * 0.8);
 
-            let newTop = Math.random() * (containerRect.height - noBtnRect.height);
-            let newLeft = Math.random() * (containerRect.width - noBtnRect.width);
-            
-            // নিশ্চিত করা হচ্ছে যে বাটনটি কন্টেইনারের বাইরে না যায়
-            if(newTop < 0) newTop = 0;
-            if(newLeft < 0) newLeft = 0;
+        noBtn.style.left = newX + 'px';
+        noBtn.style.top = newY + 'px';
+    }
 
-            noBtn.style.position = 'absolute';
-            noBtn.style.top = newTop + 'px';
-            noBtn.style.left = newLeft + 'px';
-        });
-
-        // 'হ্যাঁ' বাটনে ক্লিক করলে বার্তা দেখাবে
-        yesBtn.addEventListener('click', () => {
-            container.innerHTML = `
-                <h1>আমি জানতাম তুমি হ্যাঁ বলবে! ❤️</h1>
-                <p>আমার জীবনকে সম্পূর্ণ করার জন্য ধন্যবাদ।</p>
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWVsdXZkMmhqY3J3MXZ2aXo1bjJtY250eWV6cG5wNWZobGczZmEyYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26u4bkvatkyYarAas/giphy.gif" alt="Celebration" style="max-width: 100%; border-radius: 10px;">
-            `;
-        });
-    </script>
+    function handleNo() {
+         alert("আরে! তুমি বাটনটা ক্লিক করে ফেলেছো! 😄 ঠিক আছে, আমি তোমার সিদ্ধান্তকে সম্পূর্ণ সম্মান করি। কিন্তু তুমি আমার কোডিংটা কেমন ছিল, সেই প্রশংসাটা তো করতে পারো? 😉 ");
+         // "না" বলার পরও তাকে পজিটিভলি অ্যাপ্রোচ করা হলো
+    }
+</script>
 
 </body>
 </html>
